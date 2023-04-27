@@ -45,7 +45,7 @@ Supports `JSON` and `YAML` format for configuration file. Example of `config.jso
         "chat_ids": [
             "U0G9QF9C6"
         ],
-        "message": "This **{user_id}** made a __transaction__ with id `{trx_id}`"
+        "message": "This *{user_id}* made a _transaction_ with id `{trx_id}`"
     },
     {
         "entity": "Grants",
