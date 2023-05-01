@@ -4,13 +4,13 @@
         "chat_ids": [
             "U054G0V71EY"
         ],
-        "message": "This *{user_id}* made a _transaction_ with id `{trx_id}`"
+        "message": "This *{user_id}* made a _transaction_ with id {trx_id}"
     },
     {
         "entity": "Grants",
         "chat_ids": [
             "U054G0V71EY"
         ],
-        "message": "This `{grant}`"
+        "message": "This {grant}"
     }
 ]
