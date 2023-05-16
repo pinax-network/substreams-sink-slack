@@ -11,3 +11,7 @@ dist
 data
 build
 *.lock
+*-linux-x64
+*-macos-x64
+*-macos-arm64
+*-win-x64.exe
