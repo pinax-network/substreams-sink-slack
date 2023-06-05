@@ -6,7 +6,7 @@ import { Slack, SlackConfigSchema } from "./src/slack";
 
 import pkg from "./package.json";
 
-logger.defaultMeta = { service: pkg.name };
+logger.setName(pkg.name);
 export { logger };
 
 // default slack options
