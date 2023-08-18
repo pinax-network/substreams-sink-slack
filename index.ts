@@ -1,8 +1,7 @@
-import { EntityChanges, download } from "substreams";
-import { run, logger, RunOptions } from "substreams-sink";
+import { setup, logger, commander } from "substreams-sink";
 import { Social } from "substreams-sink-socials";
 
-import { Slack, SlackConfigSchema } from "./src/slack";
+import { Slack, SlackConfigSchema } from "./src/slack.js";
 
 import pkg from "./package.json";
 
@@ -13,15 +12,14 @@ export { logger };
 export const DEFAULT_SLACK_API_TOKEN_ENV = 'SLACK_API_TOKEN';
 
 // Custom user options interface
-interface ActionOptions extends RunOptions {
+interface ActionOptions extends commander.RunOptions {
     config: string,
     slackApiTokenEnvvar: string,
     slackApiToken: string,
 }
 
-export async function action(manifest: string, moduleName: string, options: ActionOptions) {
-    // Download substreams
-    const spkg = await download(manifest);
+export async function action(options: ActionOptions) {
+    const { emitter } = await setup(options);
 
     // Get command options
     const { config, slackApiTokenEnvvar, slackApiToken } = options;
@@ -40,14 +38,11 @@ export async function action(manifest: string, moduleName: string, options: Acti
     // Initialize Slack bot
     const slackBot = new Slack(slack_api_token);
 
-    // Run substreams
-    const substreams = run(spkg, moduleName, options);
-
-    substreams.on("anyMessage", async (messages: EntityChanges) => {
-        await social.distributeMessages(messages, (chatId, message, config) => {
+    emitter.on("anyMessage", async (messages) => {
+        await social.distributeMessages(messages as any, (chatId, message, config) => {
             slackBot.sendMessage(chatId, message, config);
         });
     });
 
-    substreams.start(options.delayBeforeStart);
+    await emitter.start();
 }

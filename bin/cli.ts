@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 
-import { cli } from "substreams-sink";
-import { cli as cliSocial } from "substreams-sink-socials";
+import { commander } from "substreams-sink";
+import { commander as commanderSocial } from "substreams-sink-socials";
 
 import { action, DEFAULT_SLACK_API_TOKEN_ENV } from "../index.js"
 import pkg from "../package.json";
 
-const program = cli.program(pkg);
-const command = cli.run(program, pkg);
+const program = commander.program(pkg);
+const command = commander.run(program, pkg);
 
-cliSocial.addSocialConfigOption(command);
+commanderSocial.addSocialConfigOption(command);
 
 command.option('--slack-api-token <string>', 'API token for the Slack bot')
 command.option('--slack-api-token-envvar <string>', 'Environnement variable name of the API token for the Slack bot', DEFAULT_SLACK_API_TOKEN_ENV)
@@ -17,4 +17,4 @@ command.option('--slack-api-token-envvar <string>', 'Environnement variable name
 command.action(action);
 program.parse();
 
-cliSocial.validateSocialConfigOption(command);
+commanderSocial.validateSocialConfigOption(command);

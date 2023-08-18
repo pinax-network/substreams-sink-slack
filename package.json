@@ -1,9 +1,10 @@
 {
     "name": "substreams-sink-slack",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Substreams slack sink module",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
+    "type": "module",
     "bin": {
         "substreams-sink-slack": "dist/bin/cli.js"
     },
@@ -34,25 +35,29 @@
     ],
     "license": "MIT OR Apache-2.0",
     "scripts": {
-        "prepublishOnly": "tsc",
-        "build": "tsup index.ts bin/cli.ts --dts",
-        "pkg": "ncc build bin/cli.ts -o build && pkg dist/bin/cli.js --target linux-x64,mac-x64,win-x64,mac-arm64 --output substreams-sink-slack"
+        "start": "tsc && node ./dist/bin/cli.js run",
+        "build": "tsc",
+        "rollup": "rollup --config rollup.config.mjs",
+        "linux": "npm run build && npm run rollup && ./scripts/build.linux.sh",
+        "macos": "npm run build && npm run rollup && ./scripts/build.macos.sh",
+        "windows": "npm run build && npm run rollup && ./scripts/build.windows.sh",
+        "prepublishOnly": "npm run build"
     },
     "dependencies": {
-        "@slack/web-api": "^6.8.1",
-        "commander": "^10.0.0",
-        "dotenv": "^16.0.3",
-        "substreams": "0.7.x",
-        "substreams-sink": "0.4.x",
-        "substreams-sink-socials": "^0.0.4",
-        "winston": "^3.8.2",
+        "@slack/web-api": "latest",
+        "dotenv": "latest",
+        "substreams-sink": "latest",
+        "substreams-sink-socials": "latest",
         "zod": "^3.21.4"
     },
     "devDependencies": {
+        "@rollup/plugin-commonjs": "latest",
+        "@rollup/plugin-json": "latest",
+        "@rollup/plugin-node-resolve": "latest",
         "@tsconfig/recommended": "latest",
-        "@vercel/ncc": "latest",
-        "pkg": "latest",
-        "tsup": "latest",
+        "@types/node": "latest",
+        "rollup": "latest",
+        "tsx": "latest",
         "typescript": "latest"
     }
 }
