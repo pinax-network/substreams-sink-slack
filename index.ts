@@ -3,7 +3,7 @@ import { Social } from "substreams-sink-socials";
 
 import { Slack, SlackConfigSchema } from "./src/slack.js";
 
-import pkg from "./package.json";
+import pkg from "./package.json" assert { type: "json" };
 
 logger.setName(pkg.name);
 export { logger };

@@ -47,8 +47,8 @@
         "@slack/web-api": "latest",
         "dotenv": "latest",
         "substreams-sink": "latest",
-        "substreams-sink-socials": "latest",
-        "zod": "^3.21.4"
+        "substreams-sink-socials": "file:../substreams-sink-socials",
+        "zod": "latest"
     },
     "devDependencies": {
         "@rollup/plugin-commonjs": "latest",
